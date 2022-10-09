@@ -20,4 +20,6 @@ python app.py
 
 ## Credits
 
-Space Shooter graphics by Kenney Vleugels (www.kenney.nl)
+* Space Shooter graphics by Kenney Vleugels (www.kenney.nl)
+
+* https://bigsoundbank.com/
