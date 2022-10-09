@@ -1,0 +1,36 @@
+general:
+    fps: 120
+    color_black: [0, 0, 0]
+    color_white: [255, 255, 255]
+    color_dark: [89, 61, 102]
+    color_light: [159, 139, 166]
+    title_font: Consolas
+    title_size: 25
+
+sound:
+    volume: 0.3
+    num_channels: 64
+
+background:
+    image_default: resources/background/image_default.png
+
+player:
+    image_default: resources/player/image_default.png
+
+laser:
+    image_green: resources/laser/image_green.png
+    sound_default: resources/laser/sound_default.ogg
+
+explosion:
+    image_green: resources/explosion/image_green.png
+    sound_default: resources/explosion/sound_default.ogg
+
+enemy:
+    images:
+        - resources/enemy/image_ship.png
+        - resources/enemy/image_ufo.png
+
+asteroid:
+    images:
+        - resources/asteroid/image_big.png
+        - resources/asteroid/image_small.png
