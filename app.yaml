@@ -34,3 +34,6 @@ asteroid:
     images:
         - resources/asteroid/image_big.png
         - resources/asteroid/image_small.png
+
+speed_line:
+    image_default: resources/speed_line/image_default.png

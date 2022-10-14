@@ -13,6 +13,7 @@ class GameConfig(object):
         self.configure_enemy()
         self.configure_explosion()
         self.configure_asteroid()
+        self.configure_speed_line()
 
     def configure(self):
         pygame.event.set_allowed([pygame.KEYDOWN])
@@ -83,3 +84,8 @@ class GameConfig(object):
         self.asteroid_images.append(pygame.image.load(
             self.gc['asteroid']['images'][1]
         ).convert_alpha())
+
+    def configure_speed_line(self):
+        self.speed_line_image_default = pygame.image.load(
+            self.gc['speed_line']['image_default']
+        ).convert_alpha()

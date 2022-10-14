@@ -7,6 +7,7 @@ from common.enemy import Enemy
 from common.game_config import GameConfig
 from common.player import Player
 from common.speed import Speed
+from common.speed_line import SpeedLine
 
 class Game:
 
@@ -48,6 +49,9 @@ class Game:
         self.player = Player(self.gc)
         self.enemy = Enemy(self.gc)
         self.asteroid = Asteroid(self.gc)
+        for i in range(1):
+            speed_line = SpeedLine(self.gc)
+            self.all_sprites_list.add(speed_line)
         # Associa os sprites aos grupos
         self.all_sprites_list.add(self.player)
         self.all_sprites_list.add(self.enemy)

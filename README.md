@@ -2,7 +2,7 @@
 
 A prototype of a space shooter game developed in python with pygame. The main objective of the project is to learn Python in a fun way.
 
-![Shoot them all](images/screenshot.png "Shoot them all")
+![Shoot them all!](images/screenshot.png "Shoot them all!")
 
 ## Start here
 
