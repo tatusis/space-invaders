@@ -74,7 +74,7 @@ class Game:
 
     def run_logic(self):
         # Termina o jogo caso as vidas do jogador acabem
-        if (self.score == 0):
+        if (self.lifes == 0):
             self.finished = True
         # Trata o retorno do jogador após a colisão
         self.check_respawning()
