@@ -37,3 +37,7 @@ asteroid:
 
 speed_line:
     image_default: resources/speed_line/image_default.png
+
+life:
+    image_default: resources/life/image_default.png
+    sound_default: resources/life/sound_default.ogg

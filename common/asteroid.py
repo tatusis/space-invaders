@@ -22,7 +22,6 @@ class Asteroid(pygame.sprite.Sprite):
         self.rect.y = -self.rect.height
         self.speed = random.choice(
             [
-                Speed.SUPER_SLOW.value,
                 Speed.VERY_SLOW.value,
                 Speed.DEFAULT.value
             ]

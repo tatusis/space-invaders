@@ -14,6 +14,7 @@ class GameConfig(object):
         self.configure_explosion()
         self.configure_asteroid()
         self.configure_speed_line()
+        self.configure_life()
 
     def configure(self):
         pygame.event.set_allowed([pygame.KEYDOWN])
@@ -89,3 +90,12 @@ class GameConfig(object):
         self.speed_line_image_default = pygame.image.load(
             self.gc['speed_line']['image_default']
         ).convert_alpha()
+
+    def configure_life(self):
+        self.life_image_default = pygame.image.load(
+            self.gc['life']['image_default']
+        ).convert_alpha()
+        self.life_sound_default = pygame.mixer.Sound(
+            self.gc['life']['sound_default']
+        )
+        self.life_sound_default.set_volume(self.volume)

@@ -16,8 +16,11 @@ class Game:
         self.finished = False
         self.fire_tick = 0
         self.score = 0
+        self.lifes = 5
+        self.respawn_tick = 0
+        self.respawning = False
         # Configura o background
-        self.bg_offset = Speed.VERY_SLOW.value
+        self.bg_offset = Speed.DEFAULT.value
         self.bg_image = self.gc.background_image_default
         self.bg_columns = math.ceil(
             self.gc.screen_width / self.bg_image.get_width()
@@ -70,6 +73,12 @@ class Game:
                     self.finished = True
 
     def run_logic(self):
+        # Termina o jogo caso as vidas do jogador acabem
+        if (self.score == 0):
+            self.finished = True
+        # Trata o retorno do jogador após a colisão
+        self.check_respawning()
+        # Remove explosões anteriores do grupo de sprites
         self.clear_explosions()
         # Trata a colisão do laser com o inimigo
         self.laser_enemy_collision()
@@ -103,12 +112,19 @@ class Game:
             True,
             [159, 139, 166]
         )
+        self.lifes_render = self.title_font.render(
+            f'X {self.lifes}',
+            True,
+            [159, 139, 166]
+        )
         self.screen.blit(self.score_render, [20, 60])
+        self.screen.blit(self.gc.life_image_default, [20, 100])
+        self.screen.blit(self.lifes_render, [75, 103])
         # Atualiza o display
         pygame.display.flip()
         # Move o background para baixo
         if self.bg_offset <= self.bg_image.get_height():
-            self.bg_offset += Speed.VERY_SLOW.value
+            self.bg_offset += Speed.DEFAULT.value
         else:
             self.bg_offset = 0
 
@@ -133,6 +149,14 @@ class Game:
                 self.fire_tick = time_tick
 
     # run_logic
+
+    def check_respawning(self):
+        respawn_tick = pygame.time.get_ticks()
+        if self.respawning:
+            if respawn_tick - self.respawn_tick > 2000:
+                self.respawn_tick = respawn_tick
+                self.respawning = False
+                self.player.set_respawn(False)
 
     def add_asteroid(self):
         asteroid = Asteroid(self.gc)
@@ -177,24 +201,34 @@ class Game:
             self.score += 1
 
     def player_enemy_collision(self):
-        collided_list = pygame.sprite.spritecollide(
-            self.player, self.enemy_list, True
-        )
-        if collided_list:
-            self.add_enemy()
-            self.all_sprites_list.remove(self.player)
-            self.player = Player(self.gc)
-            self.all_sprites_list.add(self.player)
+        if not self.respawning:
+            collided_list = pygame.sprite.spritecollide(
+                self.player, self.enemy_list, True
+            )
+            if collided_list:
+                self.add_enemy()
+                self.all_sprites_list.remove(self.player)
+                self.respawn_tick = pygame.time.get_ticks()
+                self.respawning = True
+                self.player = Player(self.gc)
+                self.player.set_respawn(True)
+                self.all_sprites_list.add(self.player)
+                self.lifes -= 1
 
     def player_asteroid_collision(self):
-        collided_list = pygame.sprite.spritecollide(
-            self.player, self.asteroid_list, True
-        )
-        if collided_list:
-            self.add_asteroid()
-            self.all_sprites_list.remove(self.player)
-            self.player = Player(self.gc)
-            self.all_sprites_list.add(self.player)
+        if not self.respawning:
+            collided_list = pygame.sprite.spritecollide(
+                self.player, self.asteroid_list, True
+            )
+            if collided_list:
+                self.add_asteroid()
+                self.all_sprites_list.remove(self.player)
+                self.respawn_tick = pygame.time.get_ticks()
+                self.respawning = True
+                self.player = Player(self.gc)
+                self.player.set_respawn(True)
+                self.all_sprites_list.add(self.player)
+                self.lifes -= 1
 
     def remove_lost_lasers(self):
         for laser in self.laser_list:

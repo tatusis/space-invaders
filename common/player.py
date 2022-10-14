@@ -9,6 +9,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, gc: GameConfig):
         pygame.sprite.Sprite.__init__(self)
         self.gc = gc
+        self.blink = False
         self.image = self.gc.player_image_default
         self.rect = self.image.get_rect()
         self.rect.x = self.gc.screen_center[0] - self.rect.width / 2
@@ -33,5 +34,18 @@ class Player(pygame.sprite.Sprite):
         elif direction == Direction.DOWN:
             self.rect.y += Speed.DEFAULT.value
 
+    def set_respawn(self, respawning: bool):
+        self.blink = respawning
+        if respawning:
+            channel = pygame.mixer.find_channel()
+            channel.play(self.gc.life_sound_default)
+        else:
+            self.image.set_alpha(255)
+
     def update(self):
-        pass
+        if self.blink:
+            alpha = self.image.get_alpha()
+            if (alpha >= 5):
+                self.image.set_alpha(alpha - 5)
+            else:
+                self.image.set_alpha(255)

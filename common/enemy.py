@@ -20,7 +20,12 @@ class Enemy(pygame.sprite.Sprite):
             self.gc.screen_width - (self.rect.width * 2)
         )
         self.rect.y = -self.rect.height
-        self.speed = Speed.HIPER_SLOW.value
+        self.speed = random.choice(
+            [
+                Speed.HIPER_SLOW.value,
+                Speed.SUPER_SLOW.value
+            ]
+        )
 
     def update(self):
         self.rect.y += self.speed
